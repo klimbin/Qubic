@@ -135,11 +135,13 @@ function play() {
                 for(var j = 0; j < line.length; j++) {
                     if(document.getElementById("" + line[j][0] + line[j][1] + line[j][2]).innerHTML == "") {
                         cell = line[j];
+                        // console.log("checking if fork to make at:" + cell);
                         for(var k = 0; k < checkForkLines.length; k++) {
                             if(k != i && lineContains(lines[checkForkLines[k]], cell)) {
+                                // console.log("making fork:" + line[j][0] + line[j][1] + line[j][2]);
                                 document.getElementById("" + line[j][0] + line[j][1] + line[j][2]).innerHTML = "O";
                                 document.getElementById("" + line[j][0] + line[j][1] + line[j][2]).classList.add('no-hover');
-                                return;
+                                return true;
                             }
                         }
                     }
@@ -152,11 +154,13 @@ function play() {
                 for(var j = 0; j < line.length; j++) {
                     if(document.getElementById("" + line[j][0] + line[j][1] + line[j][2]).innerHTML == "") {
                         cell = line[j];
+                        // console.log("checking if fork to block at:" + cell);
                         for(var k = 0; k < blockForkLines.length; k++) {
                             if(k != i && lineContains(lines[blockForkLines[k]], cell)) {
+                                // console.log("blocking fork:" + line[j][0] + line[j][1] + line[j][2]);
                                 document.getElementById("" + line[j][0] + line[j][1] + line[j][2]).innerHTML = "O";
                                 document.getElementById("" + line[j][0] + line[j][1] + line[j][2]).classList.add('no-hover');
-                                return;
+                                return true;
                             }
                         }
                     }
@@ -164,8 +168,8 @@ function play() {
             }
         }
 
-        // no fork to place or block was found
-        makeRandomMove();
+        // move was not made
+        return false;
     }
 
     function lineContains(line, cell) {
@@ -198,11 +202,11 @@ function play() {
         else if(lineToBlock != -1) {
             makeMove(lineToBlock, false);
         }
-        else if(checkForkLines.length > 1) {
-            findFork(false);
+        else if(checkForkLines.length > 1 && findFork(false)) {
+            return;
         }
-        else if(blockForkLines.length > 1) {
-            findFork(true);
+        else if(blockForkLines.length > 1 && findFork(true)) {
+            return;
         }
         else {
             makeRandomMove();
