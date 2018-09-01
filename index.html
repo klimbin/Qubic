@@ -145,23 +145,5 @@
     <button type="button" onclick="restart();">Play Again</button>
     </div>
 
-    <script>
-        function restart() {
-            var i, j, k;
-            for(i = 0; i < 4; i++) {
-                for(j = 0; j < 4; j++) {
-                    for(k = 0; k < 4; k++) {
-                        if(document.getElementById(''+i+j+k).innerHTML != "") {
-                            document.getElementById(''+i+j+k).innerHTML = "";
-                            document.getElementById(''+i+j+k).style.background = "";
-                        }
-                        document.getElementById(''+i+j+k).classList.remove('no-hover');
-                    }
-                }
-            }
-            if(document.getElementById('text').innerHTML != "Click on a cell to place a move.")
-                document.getElementById('text').innerHTML = "Click on a cell to place a move.";
-        }
-    </script>
   </body>
 </html>
